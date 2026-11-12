@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script type="module" src="./js/recherche.js"></script>
+</head>
+
+<body>
+    <header class="w-full h-[80px] text-white sticky top-0">
+        <div class="bg-slate-950 flex justify-between items-center h-full px-10 border-b-1">
+            <div class="flex gap-2 items-center ">
+                <img class="w-[80px]" src="assets/images/a_clean_vector_style_logo_illustration_on_a_transp.png"
+                    alt="DevScope Logo">
+                <p>DevScope</p>
+            </div>
+            <nav>
+                <ul class="flex gap-6 items-center">
+                    <li class="rounded-md bg-cyan-500 p-2"><a href="./index.html">Recherche</a> </li>
+                    <li><a href="./pages/shortlist.html">SchortList</a> </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="min-h-screen bg-slate-950 px-6 py-20 text-white">
+
+        <!-- Hero Section -->
+        <section class="mx-auto max-w-4xl text-center">
+
+            <h1 class="mb-6 text-4xl font-bold md:text-5xl">
+                Explorez les profils des développeurs GitHub
+            </h1>
+
+            <p class="mx-auto max-w-2xl text-lg text-gray-400">
+                Découvrez les projets, les compétences et les dépôts
+                publics des développeurs sur GitHub.
+            </p>
+
+        </section>
+
+        <!-- Search Section -->
+        <section class="mx-auto mt-12 max-w-2xl">
+
+            <h2 class="mb-5 text-center text-2xl font-semibold">
+                Rechercher un développeur
+            </h2>
+
+            <form id="myForm" >
+                <div class="flex flex-col gap-4 sm:flex-row">
+                    <label for="username" class="sr-only">
+                        Nom d'utilisateur GitHub
+                    </label>
+    
+                    <input type="search" id="username" name="username" placeholder="Ex : anass-aouji"
+                        class="w-full rounded-lg border border-gray-700 bg-slate-800 px-4 py-3 text-white placeholder-gray-400 focus:border-cyan-400 focus:outline-none">
+    
+                    <button type="submit"
+                        class="rounded-lg bg-cyan-500 px-8 py-3 font-medium text-slate-950 hover:bg-cyan-400">
+                        Rechercher
+                    </button>
+                </div>
+                <span class="error-search text-red-600"></span>
+                
+            </form>
+
+            <p class="mt-4 text-center text-sm text-gray-400">
+                Entrez un nom d'utilisateur GitHub pour découvrir son profil.
+            </p>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

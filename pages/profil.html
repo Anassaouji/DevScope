@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script type="module" src="../js/profil.js"></script>
+</head>
+
+<body>
+    <header class="w-full h-[80px] text-white sticky top-0">
+        <div class="bg-slate-950 flex justify-between items-center h-full px-10 border-b-1">
+            <div class="flex gap-2 items-center ">
+                <img class="w-[80px]" src="../assets/images/a_clean_vector_style_logo_illustration_on_a_transp.png"
+                    alt="DevScope Logo">
+                <p>DevScope</p>
+            </div>
+            <nav>
+                <ul class="flex gap-6 items-center">
+                    <li class="rounded-md bg-cyan-500 p-2"><a href="../index.html">Recherche</a> </li>
+                    <li class="p-2"><a href="./shortlist.html">SchortList</a> </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main class="min-h-screen bg-slate-950 px-5 py-10 text-white">
+        <div class="mx-auto max-w-7xl">
+            <!-- Search Section -->
+            <section class="mb-8">
+
+                <h1 class="mb-5 text-3xl font-bold">
+                    Profil du développeur
+                </h1>
+
+                <form id="myForm">
+                    <div class="flex flex-col gap-4 sm:flex-row">
+                        <label for="username" class="sr-only">
+                            Nom d'utilisateur GitHub
+                        </label>
+
+                        <input type="search" id="username" name="username" placeholder="Ex : anass-aouji"
+                            class="w-full rounded-lg border border-gray-700 bg-slate-800 px-4 py-3 text-white placeholder-gray-400 focus:border-cyan-400 focus:outline-none">
+
+                        <button type="submit"
+                            class="rounded-lg bg-cyan-500 px-8 py-3 font-medium text-slate-950 hover:bg-cyan-400">
+                            Rechercher
+                        </button>
+                    </div>
+                    <span class="error-search text-red-600"></span>
+
+                </form>
+
+            </section>
+            <!-- Profile + Repositories -->
+            <div class="grid grid-cols-1 items-start gap-6 lg:grid-cols-3">
+                <!-- Profile Section -->
+                <section class="rounded-xl border border-slate-700 bg-slate-900 p-6">
+                    <header class="mb-6 text-center">
+                        <img id="avatar" alt="Photo de profil GitHub"
+                            class="mx-auto mb-4 h-28 w-28 rounded-full border-2 border-cyan-400 object-cover">
+                        <h2 id="nom" class="text-2xl font-bold">
+                        </h2>
+                        <p id="user" class="mt-1 text-cyan-400">
+                        </p>
+                        <p id="bio" class="mt-4 text-sm text-gray-400">
+                        </p>
+                    </header>
+                    <!-- Informations -->
+                    <div class="mb-6 space-y-3 text-sm text-gray-300">
+                        <p>
+                            <span class="font-semibold">Localisation :</span>
+                            <span id="location"></span>
+                        </p>
+                        <p>
+                            <span class="font-semibold">Membre depuis :</span>
+                            <span id="memebreDepuis"></span>
+                        </p>
+                    </div>
+                    <!-- Statistics -->
+                    <div class="mb-6 grid grid-cols-3 gap-2 text-center">
+                        <div class="rounded-lg bg-slate-800 p-3">
+                            <p id="repos" class="repos text-xl font-bold text-cyan-400">
+                            </p>
+                            <p class="text-xs text-gray-400">
+                                Dépôts
+                            </p>
+                        </div>
+                        <div class="rounded-lg bg-slate-800 p-3">
+                            <p id="abonnee" class="text-xl font-bold text-cyan-400">
+                            </p>
+                            <p class="text-xs text-gray-400">
+                                Abonnés
+                            </p>
+                        </div>
+                        <div class="rounded-lg bg-slate-800 p-3">
+                            <p id="Abonnements" class="text-xl font-bold text-cyan-400">
+                            </p>
+                            <p class="text-xs text-gray-400">
+                                Abonnements
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Actions -->
+                    <div class="space-y-3">
+
+                        <button id="shortlist" type="button"
+                            class="w-full rounded-lg bg-cyan-500 px-4 py-3 font-medium text-slate-950 hover:bg-cyan-400">
+                            Ajouter à la shortlist
+                        </button>
+
+                        <a id="profilGitHub" href="https://github.com/octocat" target="_blank" rel="noopener noreferrer"
+                            class="block rounded-lg border border-slate-600 px-4 py-3 text-center text-sm text-cyan-400 hover:bg-slate-800">
+                            Voir le profil GitHub
+                        </a>
+
+                    </div>
+                </section>
+                <!-- Repositories Section -->
+                <section class="rounded-xl border border-slate-700 bg-slate-900 p-6 lg:col-span-2">
+                    <header class="mb-6 flex items-center justify-between">
+                        <h2 class="text-2xl font-bold">
+                            Dépôts GitHub
+                        </h2>
+                        <p class="rounded-full bg-slate-800 px-3 py-1 text-sm text-cyan-400">
+                            <span class="repos"></span>
+                            <span>
+                                dépôts
+                            </span>
+                        </p>
+                    </header>
+
+                    <!-- Repositories Grid -->
+                    <div class="parentRepo grid grid-cols-1 gap-4 md:grid-cols-2 overflow-y-scroll max-h-[70vh]">
+
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

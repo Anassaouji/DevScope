@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body>
+    <header class="w-full h-[80px] text-white sticky top-0">
+        <div class="bg-slate-950 flex justify-between items-center h-full px-10 border-b-1">
+            <div class="flex gap-2 items-center ">
+                <img class="w-[80px]" src="../assets/images/a_clean_vector_style_logo_illustration_on_a_transp.png"
+                    alt="DevScope Logo">
+                <p>DevScope</p>
+            </div>
+            <nav>
+                <ul class="flex gap-6 items-center">
+                    <li class="p-2"><a href="../index.html">Recherche</a> </li>
+                    <li class="rounded-md bg-cyan-500 p-2"><a href="./shortlist.html">SchortList</a> </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main class="min-h-screen bg-slate-950 px-5 py-10 text-white">
+        <div class="mx-auto max-w-7xl">
+            <!-- Page Header -->
+            <header class="mb-10">
+                <h1 class="mb-2 text-4xl font-bold text-cyan-400">
+                    Ma shortlist
+                </h1>
+                <p class="text-gray-400">
+                    3 candidats dans votre shortlist
+                </p>
+            </header>
+            <!-- Filters Section -->
+            <section class="mb-8">
+                <h2 class="sr-only">
+                    Rechercher et filtrer les candidats
+                </h2>
+                <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+                    <!-- Status Filters -->
+                    <nav aria-label="Filtres des candidats">
+                        <ul class="flex flex-wrap gap-2">
+                            <li>
+                                <button type="button"
+                                    class="rounded-lg bg-cyan-500 px-4 py-2 font-medium text-slate-950">
+                                    Tous
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button"
+                                    class="rounded-lg bg-slate-800 px-4 py-2 text-gray-300 hover:bg-slate-700">
+                                    À contacter
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button"
+                                    class="rounded-lg bg-slate-800 px-4 py-2 text-gray-300 hover:bg-slate-700">
+                                    Entretien
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button"
+                                    class="rounded-lg bg-slate-800 px-4 py-2 text-gray-300 hover:bg-slate-700">
+                                    Retenu
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button"
+                                    class="rounded-lg bg-slate-800 px-4 py-2 text-gray-300 hover:bg-slate-700">
+                                    Refusé
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- Search -->
+                    <form role="search" class="w-full lg:w-80">
+                        <label for="searchCandidate" class="sr-only">
+                            Rechercher un candidat
+                        </label>
+                        <input type="search" id="searchCandidate" name="searchCandidate"
+                            placeholder="Rechercher un candidat..."
+                            class="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 text-white placeholder-gray-400 focus:border-cyan-400 focus:outline-none">
+                    </form>
+                </div>
+            </section>
+            <!-- Candidates Section -->
+            <section>
+                <h2 class="sr-only">
+                    Liste des candidats
+                </h2>
+                <div class="space-y-5">
+                    <!-- Candidate 1 -->
+                    <article class="rounded-xl border border-slate-700 bg-slate-900 p-5">
+
+                        <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+
+                            <!-- Candidate Information -->
+                            <div class="flex items-center gap-4">
+
+                                <img src="https://github.com/octocat.png" alt="Avatar du candidat"
+                                    class="h-20 w-20 rounded-full border-2 border-cyan-400 object-cover">
+
+                                <div>
+
+                                    <h3 class="text-xl font-bold">
+                                        Soufiane Boushaba
+                                    </h3>
+
+                                    <p class="mt-1 text-sm text-gray-400">
+                                        @soufiane-boushaba
+                                    </p>
+
+                                    <span
+                                        class="mt-2 inline-block rounded-md bg-slate-800 px-3 py-1 text-sm text-cyan-400">
+                                        Java
+                                    </span>
+
+                                    <p class="mt-2 text-sm italic text-gray-300">
+                                        Développeur Java passionné.
+                                    </p>
+
+                                    <p class="mt-2 text-xs text-gray-500">
+                                        Ajouté le 06/11/2026
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Candidate Actions -->
+                            <div class="flex flex-wrap items-center gap-3">
+
+                                <p class="text-xl text-yellow-400" aria-label="5 étoiles sur 5">
+                                    ★★★★★
+                                </p>
+
+                                <span class="rounded-lg border border-red-500 px-3 py-2 text-sm text-red-400">
+                                    Refusé
+                                </span>
+
+                                <button type="button"
+                                    class="rounded-lg border border-cyan-500 px-4 py-2 text-cyan-400 hover:bg-slate-800">
+                                    Modifier
+                                </button>
+
+                                <button type="button"
+                                    class="rounded-lg border border-red-500 px-4 py-2 text-red-400 hover:bg-red-950">
+                                    Supprimer
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+                </div>
+
+            </section>
+        </div>
+    </main>
+</body>
+</html>
