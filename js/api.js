@@ -1,7 +1,15 @@
-export async function getUser(username) {
+export async function getUser(username, token) {
     try {
 
-        const response = await fetch(`https://api.github.com/users/${username}`);
+        const response = await fetch(`https://api.github.com/users/${username}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    Accept: "application/vnd.github+json"
+                }
+            }
+
+        );
         if (response.status === 404) {
             throw new Error("Aucun développeur trouvé");
         }
@@ -23,9 +31,14 @@ export async function getUser(username) {
     }
 }
 
-export async function getRepos(url) {
+export async function getRepos(url,token) {
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: "application/vnd.github+json"
+            }
+        });
         if (response.status === 404) {
             throw new Error("Aucun Repo trouvé");
         }

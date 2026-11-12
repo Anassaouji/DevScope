@@ -1,4 +1,5 @@
 import { getRepos, getUser } from "./api.js";
+import { GITHUB_TOKEN } from "./config.js";
 import { validName } from "./utils.js";
 
 const params = new URLSearchParams(window.location.search);
@@ -9,7 +10,7 @@ async function afficherProfil() {
 
     if (!username) return;
 
-    const user = await getUser(username);
+    const user = await getUser(username,GITHUB_TOKEN);
 
     if (!user) return;
 
@@ -37,7 +38,7 @@ async function afficherProfil() {
     abonnement.textContent = user.following;
     const profilGitHub = document.querySelector("#profilGitHub");
     profilGitHub.href = user.html_url;
-    const allRepos = await getRepos(`${user.repos_url}?per_page=100&sort=updated`);
+    const allRepos = await getRepos(`${user.repos_url}?per_page=100&sort=updated`,GITHUB_TOKEN);
     repositorie(allRepos);
 
 
@@ -122,7 +123,7 @@ myForm.addEventListener("submit", async (e) => {
     const name = document.querySelector("#username");
     let nom = validName(name.value);
     if (!nom) return;
-    const user = await getUser(nom);
+    const user = await getUser(nom,GITHUB_TOKEN);
     if (!user) {
         window.location.href = `../pages/introuvable.html?`;
         return;
