@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script type="module" src="../js/shortlist.js"></script>
+</head>
+
+<body>
+    <header class="w-full h-[80px] text-white sticky top-0 max-sm:h-[120px] ">
+        <div class="bg-slate-950 flex justify-between items-center h-full px-10 border-b-1 max-sm:flex-col ">
+            <div class="flex gap-2 items-center max-sm:w-full max-sm:gap-20 max-sm:justify-center">
+                <img class="w-[80px]" src="../assets/images/a_clean_vector_style_logo_illustration_on_a_transp.png"
+                    alt="DevScope Logo">
+                <p>DevScope</p>
+            </div>
+            <nav>
+                <ul class="flex gap-6 items-center max-sm:w-full max-sm:gap-20 max-sm:mb-3">
+                    <li class="p-2"><a href="../index.html">Recherche</a> </li>
+                    <li class="rounded-md bg-cyan-500 p-2"><a href="./shortlist.html">SchortList</a> </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main class="min-h-screen bg-slate-950 px-5 py-10 text-white">
+        <div class="mx-auto max-w-7xl">
+            <!-- Page Header -->
+            <header class="mb-10">
+                <h1 class="mb-2 text-4xl font-bold text-cyan-400">
+                    Ma shortlist
+                </h1>
+                <p id="nombreCandidats" class="text-gray-400">
+                </p>
+            </header>
+            <!-- Filters Section -->
+            <section class="mb-8">
+                <h2 class="sr-only">
+                    Rechercher et filtrer les candidats
+                </h2>
+                <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+                    <!-- Status Filters -->
+                    <nav aria-label="Filtres des candidats">
+                        <ul class="flex flex-wrap gap-2">
+                            <li>
+                                <button type="button"
+                                    class="rounded-lg bg-cyan-500 px-4 py-2 font-medium text-slate-950">
+                                    Tous
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button"
+                                    class="rounded-lg bg-slate-800 px-4 py-2 text-gray-300 hover:bg-slate-700">
+                                    À contacter
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button"
+                                    class="rounded-lg bg-slate-800 px-4 py-2 text-gray-300 hover:bg-slate-700">
+                                    Entretien
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button"
+                                    class="rounded-lg bg-slate-800 px-4 py-2 text-gray-300 hover:bg-slate-700">
+                                    Retenu
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button"
+                                    class="rounded-lg bg-slate-800 px-4 py-2 text-gray-300 hover:bg-slate-700">
+                                    Refusé
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- Search -->
+                    <form role="search" class="w-full lg:w-80">
+                        <label for="searchCandidate" class="sr-only">
+                            Rechercher un candidat
+                        </label>
+                        <input type="search" id="searchCandidate" name="searchCandidate"
+                            placeholder="Rechercher un candidat..."
+                            class="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 text-white placeholder-gray-400 focus:border-cyan-400 focus:outline-none">
+                    </form>
+                </div>
+            </section>
+            <!-- Candidates Section -->
+            <section>
+                <div id="candidats" class="space-y-5">
+                    <!-- Candidate  -->
+                    
+                </div>
+
+            </section>
+        </div>
+    </main>
+</body>
+
+</html>
