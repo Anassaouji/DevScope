@@ -10,15 +10,15 @@
 </head>
 
 <body>
-    <header class="w-full h-[80px] text-white sticky top-0">
-        <div class="bg-slate-950 flex justify-between items-center h-full px-10 border-b-1">
-            <div class="flex gap-2 items-center ">
+    <header class="w-full h-[80px] text-white sticky top-0 max-sm:h-[120px]">
+        <div class="bg-slate-950 flex justify-between items-center h-full px-10 border-b-1 max-sm:flex-col">
+            <div class="flex gap-2 items-center max-sm:w-full max-sm:gap-20 max-sm:justify-center">
                 <img class="w-[80px]" src="../assets/images/a_clean_vector_style_logo_illustration_on_a_transp.png"
                     alt="DevScope Logo">
                 <p>DevScope</p>
             </div>
             <nav>
-                <ul class="flex gap-6 items-center">
+                <ul class="flex gap-6 items-center max-sm:w-full max-sm:gap-20 max-sm:mb-3">
                     <li class="rounded-md bg-cyan-500 p-2"><a href="../index.html">Recherche</a> </li>
                     <li class="p-2"><a href="./shortlist.html">SchortList</a> </li>
                 </ul>
@@ -109,6 +109,7 @@
                             class="w-full rounded-lg bg-cyan-500 px-4 py-3 font-medium text-slate-950 hover:bg-cyan-400">
                             Ajouter à la shortlist
                         </button>
+                        <span class="error-shortlist text-red-600 p-1"></span>
 
                         <a id="profilGitHub" href="https://github.com/octocat" target="_blank" rel="noopener noreferrer"
                             class="block rounded-lg border border-slate-600 px-4 py-3 text-center text-sm text-cyan-400 hover:bg-slate-800">

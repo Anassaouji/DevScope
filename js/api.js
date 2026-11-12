@@ -1,3 +1,5 @@
+import { API_URL } from "./config.js";
+
 export async function getUser(username, token) {
     try {
 
@@ -60,4 +62,27 @@ export async function getRepos(url,token) {
     }
 
 
+}
+
+
+export async function getCandidats(candidats) {
+    try {
+        const response = await fetch(`${API_URL}/${candidats}`);
+        if (response.status === 404) {
+            throw new Error("Aucune Candidats Trouvé");
+        }
+        if (response.status === 403 || response.status === 429) {
+            throw new Error("Limite de requêtes atteinte. Réessayez plus tard.");
+        }
+        if (!response.ok) {
+            throw new Error("Erreur du serveur : " + response.status);
+        }
+
+        return await response.json();
+
+    }
+    catch (error) {
+        console.log(error.message);
+
+    }
 }

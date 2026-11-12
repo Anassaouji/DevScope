@@ -1,5 +1,5 @@
 import { getRepos, getUser } from "./api.js";
-import { GITHUB_TOKEN } from "./config.js";
+import { API_URL, GITHUB_TOKEN } from "./config.js";
 import { validName } from "./utils.js";
 
 const params = new URLSearchParams(window.location.search);
@@ -10,10 +10,11 @@ async function afficherProfil() {
 
     if (!username) return;
 
-    const user = await getUser(username,GITHUB_TOKEN);
+    const user = await getUser(username, GITHUB_TOKEN);
 
     if (!user) return;
-
+    const name = document.querySelector("#username");
+    name.value = user.login;
     console.log(user);
     const avatar = document.querySelector("#avatar");
     avatar.src = user.avatar_url;
@@ -38,7 +39,7 @@ async function afficherProfil() {
     abonnement.textContent = user.following;
     const profilGitHub = document.querySelector("#profilGitHub");
     profilGitHub.href = user.html_url;
-    const allRepos = await getRepos(`${user.repos_url}?per_page=100&sort=updated`,GITHUB_TOKEN);
+    const allRepos = await getRepos(`${user.repos_url}?per_page=100&sort=updated`, GITHUB_TOKEN);
     repositorie(allRepos);
 
 
@@ -85,7 +86,7 @@ function aficheRepo(repo) {
         ? "Mis à jour aujourd'hui"
         : `Mis à jour il y a ${diffJours} jours`;
 
-    
+
     article.innerHTML = `<article class="rounded-lg border border-slate-700 bg-slate-800 p-5">
     
                                 <h3 id="nameRepo" class="mb-3 text-lg font-semibold text-cyan-400">
@@ -123,7 +124,7 @@ myForm.addEventListener("submit", async (e) => {
     const name = document.querySelector("#username");
     let nom = validName(name.value);
     if (!nom) return;
-    const user = await getUser(nom,GITHUB_TOKEN);
+    const user = await getUser(nom, GITHUB_TOKEN);
     if (!user) {
         window.location.href = `../pages/introuvable.html?`;
         return;
@@ -132,7 +133,56 @@ myForm.addEventListener("submit", async (e) => {
 
 })
 
+
+
 const shortlistBtn = document.querySelector("#shortlist");
-shortlistBtn.addEventListener("click", () => {
-    window.location.href = `../pages/shortlist.html`;
+shortlistBtn.addEventListener("click", async () => {
+    const user = await getUser(username, GITHUB_TOKEN);
+    const errorShortlist = document.querySelector(".error-shortlist");
+    if (!user) return;
+    const nouveauCandidat = {
+        login: user.login,
+        name: user.name || user.login,
+        avatar_url: user.avatar_url,
+        html_url: user.html_url,
+        language: "JavaScript",
+        rating: 3,
+        status: "À contacter",
+        note: "",
+        createdAt: new Date().toISOString()
+    };
+    const resultats = await fetch(`${API_URL}/candidats`);
+    if (!resultats.ok) {
+        errorShortlist.textContent = "Erreur lors du chargement";
+        errorShortlist.classList.add("text-red-600")
+        return;
+    }
+    const candidats = await resultats.json()
+    const candidat = candidats.some(candid => candid.login === user.login);
+    if (candidat) {
+        errorShortlist.textContent = "Candidat deja ajouter au shortList";
+        errorShortlist.classList.add("text-red-600")
+        return;
+    }
+    // errorShortlist.textContent="";
+    const response = await fetch(`${API_URL}/candidats`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(nouveauCandidat)
+    });
+
+    if (!response.ok) {
+        errorShortlist.textContent = "Erreur lors de l'ajout";
+        errorShortlist.classList.add("text-red-600")
+        return;
+    }
+
+    errorShortlist.textContent = "Candidat ajouté avec succès";
+    errorShortlist.classList.remove("text-red-600")
+    errorShortlist.classList.add("text-green-600")
+
 })
+
+
+
+
