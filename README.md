@@ -106,7 +106,7 @@ Cette organisation facilite la lecture, la maintenance et la réutilisation du c
 
 ## Démonstration
 
-- **Application en ligne :** ajouter ici l'URL GitHub Pages.
+- **Application en ligne :** https://anassaouji.github.io/DevScope.
 - **Code source :** ajouter ici l'URL du dépôt GitHub.
 
 ## Auteur
