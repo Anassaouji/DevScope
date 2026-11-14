@@ -4,6 +4,11 @@
 
 Le projet met en pratique la consommation d'API REST avec JavaScript, la manipulation du DOM et la gestion des données à travers plusieurs pages.
 
+## Démonstration
+
+- **Application en ligne :** https://anassaouji.github.io/DevScope/
+- **Code source :** https://github.com/Anassaouji/DevScope.git
+
 ## Fonctionnalités
 
 ### 🔎 Recherche de développeurs
@@ -103,11 +108,6 @@ Cette organisation facilite la lecture, la maintenance et la réutilisation du c
 5. Rechercher un nom d'utilisateur GitHub et consulter son profil.
 
 > **Sécurité :** ne publiez jamais de token GitHub personnel ni de secret dans le dépôt. Pour un déploiement purement front-end, les identifiants secrets doivent être gérés côté serveur, et non dans le JavaScript accessible au navigateur.
-
-## Démonstration
-
-- **Application en ligne :** https://anassaouji.github.io/DevScope/
-- **Code source :** https://github.com/Anassaouji/DevScope.git
 
 ## Auteur
 
