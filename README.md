@@ -8,6 +8,8 @@ Le projet met en pratique la consommation d'API REST avec JavaScript, la manipul
 
 - **Application en ligne :** https://anassaouji.github.io/DevScope/
 - **Code source :** https://github.com/Anassaouji/DevScope.git
+- **Planification :** https://aoujianass.atlassian.net/jira/software/projects/DEV/boards/37/
+- **Presentation :** (https://canva.link/66agytw96fovbwv)
 
 ## Fonctionnalités
 
