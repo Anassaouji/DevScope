@@ -106,8 +106,8 @@ Cette organisation facilite la lecture, la maintenance et la réutilisation du c
 
 ## Démonstration
 
-- **Application en ligne :** [https://anassaouji.github.io/DevScope/]
-- **Code source :** [https://github.com/Anassaouji/DevScope.git]
+- **Application en ligne :** https://anassaouji.github.io/DevScope/
+- **Code source :** https://github.com/Anassaouji/DevScope.git
 
 ## Auteur
 
