@@ -1,6 +1,6 @@
 import { getRepos, getUser } from "./api.js";
 import { validName } from "./utils.js";
-
+const API_URL = "https://6af5f059f6270fa08d68eb75.mockapi.io/api/v1";
 const params = new URLSearchParams(window.location.search);
 
 const username = params.get("username");
