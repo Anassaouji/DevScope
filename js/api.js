@@ -1,17 +1,8 @@
 import { API_URL } from "./config.js";
-
-export async function getUser(username, token) {
+export async function getUser(username) {
     try {
 
-        const response = await fetch(`https://api.github.com/users/${username}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    Accept: "application/vnd.github+json"
-                }
-            }
-
-        );
+        const response = await fetch(`https://api.github.com/users/${username}`);
         if (response.status === 404) {
             throw new Error("Aucun développeur trouvé");
         }
@@ -33,14 +24,9 @@ export async function getUser(username, token) {
     }
 }
 
-export async function getRepos(url,token) {
+export async function getRepos(url) {
     try {
-        const response = await fetch(url, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                Accept: "application/vnd.github+json"
-            }
-        });
+        const response = await fetch(url);
         if (response.status === 404) {
             throw new Error("Aucun Repo trouvé");
         }
