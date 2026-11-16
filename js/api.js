@@ -1,4 +1,3 @@
-// import { API_URL } from "./config.js";
 const API_URL = "https://6af5f059f6270fa08d68eb75.mockapi.io/api/v1";
 export async function getUser(username) {
     try {
