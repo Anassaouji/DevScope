@@ -1,10 +1,10 @@
 import { getRepos, getUser } from "./api.js";
 import { validName } from "./utils.js";
-
+const API_URL = "https://6af5f059f6270fa08d68eb75.mockapi.io/api/v1";
 const params = new URLSearchParams(window.location.search);
 
 const username = params.get("username");
-
+let allRepos = [];
 async function afficherProfil() {
 
     if (!username) return;
@@ -38,7 +38,7 @@ async function afficherProfil() {
     abonnement.textContent = user.following;
     const profilGitHub = document.querySelector("#profilGitHub");
     profilGitHub.href = user.html_url;
-    const allRepos = await getRepos(`${user.repos_url}?per_page=100&sort=updated`);
+    allRepos = await getRepos(`${user.repos_url}?per_page=100&sort=updated`);
     repositorie(allRepos);
 
 
@@ -51,9 +51,23 @@ afficherProfil();
 
 
 
+const etat = { categorie: "Tous", recherch: "" };
+let search = document.querySelector("#cherche")
+search.addEventListener("input", () => {
+    etat.recherch = search.value;
+    repositorie(allRepos)
+})
+const parent = document.querySelector(".parentRepo");
+
 function repositorie(repos) {
-    repos.forEach((repo) => {
-        const parent = document.querySelector(".parentRepo");
+    const nouveauRespos = repos.filter(repo => {
+        return repo.name.toLowerCase().includes(etat.recherch.toLowerCase()) &&
+            (etat.categorie === "Tous" || repo.language === etat.categorie)
+    })
+    parent.innerHTML = ""
+    const repose = document.querySelectorAll(".repos");
+    repose.forEach((repo) => repo.textContent = nouveauRespos.length || "Aucune Repo")
+    nouveauRespos.forEach((repo) => {
         const article = aficheRepo(repo)
         parent.append(article)
     })
@@ -81,9 +95,7 @@ function aficheRepo(repo) {
     const article = document.createElement("article");
     const diffMs = Date.now() - new Date(repo.updated_at).getTime();
     const diffJours = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-    const dateText = diffJours === 0
-        ? "Mis à jour aujourd'hui"
-        : `Mis à jour il y a ${diffJours} jours`;
+    const dateText = diffJours === 0 ? "Mis à jour aujourd'hui" : `Mis à jour il y a ${diffJours} jours`;
 
 
     article.innerHTML = `<article class="rounded-lg border border-slate-700 bg-slate-800 p-5">
@@ -114,6 +126,16 @@ function aficheRepo(repo) {
 
     return article
 }
+
+const btnParent = document.querySelector("#filterRepo");
+btnParent.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-filter]");
+
+    if (btn) {
+        etat.categorie = btn.dataset.filter;
+        repositorie(allRepos);
+    }
+})
 
 
 const myForm = document.querySelector("#myForm");

@@ -12,10 +12,10 @@ myForm.addEventListener("submit", async(e) => {
     if(!user){
         console.log("hhhhh");
         
-        window.location.href = `../pages/introuvable.html?`;
+        window.location.href = `./pages/introuvable.html?`;
         
         return;
     }
-    window.location.href = `../pages/profil.html?username=${encodeURIComponent(user.login)}`;
+    window.location.href = `./pages/profil.html?username=${encodeURIComponent(user.login)}`;
 
 })
