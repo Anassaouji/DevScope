@@ -1,4 +1,4 @@
-import { getCandidats, modifieCandidat } from "./api.js";
+import { deleteCandidat, getCandidats, modifieCandidat } from "./api.js";
 
 let candidats = await getCandidats("candidats");
 const candidatsParent = document.querySelector("#candidats");
@@ -49,11 +49,11 @@ function afichCandidat(candidat) {
                                 <span class="rounded-lg border border-red-500 px-3 py-2 text-sm text-red-400">
                                     ${candidat.status}
                                 </span>
-                                <button type="button" id="modifierC"
+                                <button type="button" data-action="modifier"
                                     class="rounded-lg border border-cyan-500 px-4 py-2 text-cyan-400 hover:bg-slate-800">
                                     Modifier
                                 </button>
-                                <button type="button"
+                                <button type="button" data-action="supprimer"
                                     class="rounded-lg border border-red-500 px-4 py-2 text-red-400 hover:bg-red-950">
                                     Supprimer
                                 </button>
@@ -70,23 +70,35 @@ afichCandidats();
 
 // const modifierC = document.querySelector("#modifierC");
 // const candidatArt = document.querySelector(".candidatArt");
+const modalSuppression = document.querySelector("#modalSuppression")
 const modalModifier = document.querySelector("#modalModifier");
 const form = document.querySelector("#formModifier");
 candidatsParent.addEventListener("click", (e) => {
-    const modifierC = e.target.closest("#modifierC")
-    if (!modifierC) return
-    const parent = modifierC.closest(".candidatArt");
-    const id = parent.id
-    const candidat = candidats.find(candidat => candidat.id === id);
-    const statut = document.querySelector("#statut");
-    const rating = document.querySelector("#rating");
-    const commentaire = document.querySelector("#commentaire");
-    statut.value = candidat.status;
-    rating.value = candidat.rating
-    commentaire.value = candidat.note
-    indexCandidat = id;
-    console.log(candidat);
-    modalModifier.classList.remove("hidden")
+    const modifierC = e.target.closest("[data-action='modifier']")
+    const supprimeC = e.target.closest("[data-action='supprimer']")
+    if (modifierC) {
+        const parent = modifierC.closest(".candidatArt");
+        const id = parent.id
+        const candidat = candidats.find(candidat => candidat.id === id);
+        const statut = document.querySelector("#statut");
+        const rating = document.querySelector("#rating");
+        const commentaire = document.querySelector("#commentaire");
+        statut.value = candidat.status;
+        rating.value = candidat.rating
+        commentaire.value = candidat.note
+        indexCandidat = id;
+        console.log(candidat);
+        modalModifier.classList.remove("hidden")
+
+    }
+    if (supprimeC) {
+        const parent = supprimeC.closest(".candidatArt");
+        const id = parent.id
+        indexCandidat = id;
+        modalSuppression.classList.remove("hidden");
+
+    }
+
 })
 
 modalModifier.addEventListener("click", (e) => {
@@ -109,9 +121,9 @@ form.addEventListener("submit", async (e) => {
         const commentaire = document.querySelector("#commentaire");
         const candidat = candidats.find(candidat => candidat.id === indexCandidat);
         const changement = { status: statut.value, rating: Number(rating.value), note: commentaire.value }
-        enregistrer.disabled=true;
-        enregistrer.textContent="Enregistrement";
-        enregistrer.classList.add("disabled:opacity-50","disabled:cursor-not-allowed");
+        enregistrer.disabled = true;
+        enregistrer.textContent = "Enregistrement";
+        enregistrer.classList.add("disabled:opacity-50", "disabled:cursor-not-allowed");
 
         try {
             await modifieCandidat(indexCandidat, { ...candidat, ...changement });
@@ -122,11 +134,44 @@ form.addEventListener("submit", async (e) => {
             modalModifier.classList.add("hidden");
         }
         catch (err) {
-            console.log("Erreur",err);
+            console.log("Erreur", err);
         }
         finally {
-            enregistrer.disabled=false;
-            enregistrer.textContent="Modifier";
+            enregistrer.disabled = false;
+            enregistrer.textContent = "Modifier";
         }
     }
+})
+
+
+// suprimer Candidat
+
+modalSuppression.addEventListener("click", async (e) => {
+    const anulle = e.target.closest("#annulerSuppression")
+    const confirmer = e.target.closest("#confirmerSuppression")
+    if (anulle) {
+        modalSuppression.classList.add("hidden");
+    }
+    if (confirmer) {
+        confirmer.disabled = true;
+        confirmer.textContent = "Enregistrement";
+        confirmer.classList.add("disabled:opacity-50", "disabled:cursor-not-allowed");
+
+        try {
+            await deleteCandidat(indexCandidat);
+            candidats = await getCandidats("candidats");
+            afichCandidats(candidats)
+            indexCandidat = null;
+            modalSuppression.classList.add("hidden");
+        }
+        catch (err) {
+            console.log('Erreur ', err);
+
+        }
+        finally {
+            confirmer.disabled = false;
+            confirmer.textContent = "Supprimer"
+        }
+    }
+
 })

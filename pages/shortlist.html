@@ -169,7 +169,8 @@
                             Annuler
                         </button>
 
-                        <button id="enregistrer" type="submit" class="bg-cyan-500 hover:bg-cyan-600 px-5 py-3 rounded-lg font-bold">
+                        <button id="enregistrer" type="submit"
+                            class="bg-cyan-500 hover:bg-cyan-600 px-5 py-3 rounded-lg font-bold">
                             ✓ Enregistrer
                         </button>
                     </div>
@@ -177,6 +178,43 @@
                 </form>
             </div>
         </div>
+
+
+        <!-- modal Suprimer un Candidat -->
+        <div id="modalSuppression" class="fixed inset-0 bg-black/70 flex items-center justify-center z-50 hidden">
+
+            <div class="bg-slate-900 border border-slate-700 rounded-xl p-6 w-11/12 max-w-md shadow-xl">
+
+                <div class="flex items-center justify-center w-14 h-14 bg-red-500/10 rounded-full mx-auto mb-4">
+                    <span class="text-3xl">🗑️</span>
+                </div>
+
+                <h2 class="text-xl font-bold text-white text-center mb-3">
+                    Supprimer ce candidat ?
+                </h2>
+
+                <p class="text-slate-400 text-sm text-center mb-6">
+                    Êtes-vous sûr de vouloir supprimer ce candidat
+                    de votre shortlist ? Cette action est irréversible.
+                </p>
+
+                <div class="flex justify-end gap-3">
+
+                    <button id="annulerSuppression"
+                        class="px-5 py-2 bg-slate-800 border border-slate-600 text-slate-300 hover:bg-slate-700 rounded-lg transition">
+                        Annuler
+                    </button>
+
+                    <button id="confirmerSuppression"
+                        class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition">
+                        Supprimer
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+
 
     </main>
 </body>
