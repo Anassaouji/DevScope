@@ -92,11 +92,92 @@
             <section>
                 <div id="candidats" class="space-y-5">
                     <!-- Candidate  -->
-                    
+
                 </div>
 
             </section>
         </div>
+
+        <!-- Modal modification candidat -->
+        <div id="modalModifier" class="fixed inset-0 bg-black/70 flex items-center justify-center z-50 hidden">
+
+            <div class="bg-slate-900 text-white w-11/12 max-w-xl p-6 rounded-2xl border border-slate-700">
+
+                <!-- En-tête -->
+                <div class="flex justify-between items-start mb-8">
+                    <div>
+                        <p class="text-cyan-400 text-sm font-bold mb-2">
+                            MISE À JOUR DU PROFIL
+                        </p>
+
+                        <h2 class="text-xl font-bold">
+                            Modifier le candidat
+                            <span id="nomCandidat" class="text-pink-400"></span>
+                        </h2>
+                    </div>
+
+                    <button id="fermerModal" type="button" class="bg-slate-800 px-3 py-2 rounded-lg">
+                        ✕
+                    </button>
+                </div>
+
+                <!-- Formulaire -->
+                <form id="formModifier" class="space-y-6">
+
+                    <!-- Statut -->
+                    <div>
+                        <label for="statut" class="block mb-3 font-bold">
+                            Statut de recrutement
+                        </label>
+
+                        <select id="statut" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-lg">
+                            <option value="Entretien">Entretien</option>
+                            <option value="À contacter">À contacter</option>
+                            <option value="Retenu">Retenu</option>
+                            <option value="Refusé">Refusé</option>
+                        </select>
+                    </div>
+
+                    <!-- Note -->
+                    <div>
+                        <label for="rating" class="block mb-3 font-bold">
+                            Note
+                        </label>
+
+                        <select id="rating" class="w-full bg-slate-800 border border-slate-700 p-3 rounded-lg">
+                            <option value="1">★ 1 / 5</option>
+                            <option value="2">★★ 2 / 5</option>
+                            <option value="3">★★★ 3 / 5</option>
+                            <option value="4">★★★★ 4 / 5</option>
+                            <option value="5">★★★★★ 5 / 5</option>
+                        </select>
+                    </div>
+
+                    <!-- Commentaire -->
+                    <div>
+                        <label for="commentaire" class="block mb-3 font-bold">
+                            Note interne
+                        </label>
+
+                        <textarea id="commentaire" rows="4" placeholder="Ajouter un commentaire..."
+                            class="w-full bg-slate-800 border border-slate-700 p-3 rounded-lg resize-none"></textarea>
+                    </div>
+
+                    <!-- Boutons -->
+                    <div class="flex justify-end gap-3 pt-4">
+                        <button id="annulerModal" type="reset" class="bg-slate-800 px-5 py-3 rounded-lg">
+                            Annuler
+                        </button>
+
+                        <button id="enregistrer" type="submit" class="bg-cyan-500 hover:bg-cyan-600 px-5 py-3 rounded-lg font-bold">
+                            ✓ Enregistrer
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
     </main>
 </body>
 
