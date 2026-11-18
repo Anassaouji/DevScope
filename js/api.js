@@ -75,3 +75,15 @@ export async function getCandidats(candidats) {
 }
 
 
+export async function modifieCandidat(id, candidat) {
+    const reponse = await fetch(`${API_URL}/candidats/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(candidat),
+    });
+    if (!reponse.ok) throw new Error(`Erreur HTTP ${reponse.status}`);
+    return reponse.json(); // la tâche modifiée, renvoyée par le serveur
+}
+
+
+

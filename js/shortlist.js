@@ -1,10 +1,12 @@
-import { getCandidats } from "./api.js";
+import { getCandidats, modifieCandidat } from "./api.js";
 
-async function afichCandidats() {
+let candidats = await getCandidats("candidats");
+const candidatsParent = document.querySelector("#candidats");
+let indexCandidat = null;
+function afichCandidats() {
     const nombreCandidats = document.querySelector("#nombreCandidats");
-    const candidatsParent = document.querySelector("#candidats");
-    const candidats = await getCandidats("candidats");
     if (!candidats) return;
+    candidatsParent.innerHTML = "";
     nombreCandidats.textContent = `${candidats.length} candidats dans votre shortlist`;
     candidats.forEach(candidat => {
         const article = afichCandidat(candidat);
@@ -14,7 +16,7 @@ async function afichCandidats() {
 
 function afichCandidat(candidat) {
     const article = document.createElement("article");
-    article.innerHTML = `<article class="rounded-xl border border-slate-700 bg-slate-900 p-5">
+    article.innerHTML = `<article id="${candidat.id}" class="candidatArt rounded-xl border border-slate-700 bg-slate-900 p-5">
                         <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
                             <!-- Candidate Information -->
                             <div class="flex items-center gap-4">
@@ -42,12 +44,12 @@ function afichCandidat(candidat) {
                             <!-- Candidate Actions -->
                             <div class="flex flex-wrap items-center gap-3">
                                 <p class="text-xl text-yellow-400" aria-label="5 étoiles sur 5">
-                                    ★★★★★
+                                    ${"★".repeat(candidat.rating || 0)}
                                 </p>
                                 <span class="rounded-lg border border-red-500 px-3 py-2 text-sm text-red-400">
-                                    Refusé
+                                    ${candidat.status}
                                 </span>
-                                <button type="button"
+                                <button type="button" id="modifierC"
                                     class="rounded-lg border border-cyan-500 px-4 py-2 text-cyan-400 hover:bg-slate-800">
                                     Modifier
                                 </button>
@@ -63,3 +65,68 @@ function afichCandidat(candidat) {
 }
 
 afichCandidats();
+
+
+
+// const modifierC = document.querySelector("#modifierC");
+// const candidatArt = document.querySelector(".candidatArt");
+const modalModifier = document.querySelector("#modalModifier");
+const form = document.querySelector("#formModifier");
+candidatsParent.addEventListener("click", (e) => {
+    const modifierC = e.target.closest("#modifierC")
+    if (!modifierC) return
+    const parent = modifierC.closest(".candidatArt");
+    const id = parent.id
+    const candidat = candidats.find(candidat => candidat.id === id);
+    const statut = document.querySelector("#statut");
+    const rating = document.querySelector("#rating");
+    const commentaire = document.querySelector("#commentaire");
+    statut.value = candidat.status;
+    rating.value = candidat.rating
+    commentaire.value = candidat.note
+    indexCandidat = id;
+    console.log(candidat);
+    modalModifier.classList.remove("hidden")
+})
+
+modalModifier.addEventListener("click", (e) => {
+    const hide = e.target.closest("#fermerModal");
+    const anulee = e.target.closest("#annulerModal");
+    const btn = hide || anulee;
+    if (btn) {
+        modalModifier.classList.add("hidden");
+        form.reset();
+    }
+})
+
+
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const enregistrer = document.querySelector("#enregistrer");
+    if (indexCandidat !== null) {
+        const statut = document.querySelector("#statut");
+        const rating = document.querySelector("#rating");
+        const commentaire = document.querySelector("#commentaire");
+        const candidat = candidats.find(candidat => candidat.id === indexCandidat);
+        const changement = { status: statut.value, rating: Number(rating.value), note: commentaire.value }
+        enregistrer.disabled=true;
+        enregistrer.textContent="Enregistrement";
+        enregistrer.classList.add("disabled:opacity-50","disabled:cursor-not-allowed");
+
+        try {
+            await modifieCandidat(indexCandidat, { ...candidat, ...changement });
+            candidats = await getCandidats("candidats")
+            afichCandidats(candidats)
+            indexCandidat = null;
+            form.reset()
+            modalModifier.classList.add("hidden");
+        }
+        catch (err) {
+            console.log("Erreur",err);
+        }
+        finally {
+            enregistrer.disabled=false;
+            enregistrer.textContent="Modifier";
+        }
+    }
+})
