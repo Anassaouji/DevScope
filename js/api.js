@@ -3,8 +3,7 @@ const API_URL = "https://6af5f059f6270fa08d68eb75.mockapi.io/api/v1";
 export async function getUser(username) {
     try {
 
-        const response = await fetch(`https://api.github.com/users/${username}`,
-        );
+        const response = await fetch(`https://api.github.com/users/${username}`);
         if (response.status === 404) {
             throw new Error("Aucun développeur trouvé");
         }
@@ -28,8 +27,7 @@ export async function getUser(username) {
 
 export async function getRepos(url) {
     try {
-        const response = await fetch(url,
-        );
+        const response = await fetch(url);
         if (response.status === 404) {
             throw new Error("Aucun Repo trouvé");
         }
