@@ -3,12 +3,40 @@ import { deleteCandidat, getCandidats, modifieCandidat } from "./api.js";
 let candidats = await getCandidats("candidats");
 const candidatsParent = document.querySelector("#candidats");
 let indexCandidat = null;
+const etat = {filter:"Tous" , cherch:""}
+const searchCandidate = document.querySelector("#searchCandidate");
+searchCandidate.addEventListener("input",()=>{
+    etat.cherch=searchCandidate.value;
+    afichCandidats(candidats)
+})
+
+const filterParent = document.querySelector("#filterParent");
+filterParent.addEventListener("click",(e)=>{
+    const btn = e.target.closest("[data-filter]");
+    btn.classList.add("bg-slate-800")
+    if(btn){
+        etat.filter = btn.dataset.filter;
+        filterParent.querySelectorAll("[data-filter]").forEach(btn => {
+            btn.classList.remove("bg-cyan-500","text-slate-950");
+            btn.classList.add("bg-slate-800","text-gray-300","hover:bg-slate-700")
+
+        })
+        btn.classList.remove("bg-slate-800","hover:bg-slate-700")
+        btn.classList.add("bg-cyan-500","font-medium","text-slate-950")
+        afichCandidats(candidats)
+    }
+})
+
 function afichCandidats() {
     const nombreCandidats = document.querySelector("#nombreCandidats");
     if (!candidats) return;
     candidatsParent.innerHTML = "";
     nombreCandidats.textContent = `${candidats.length} candidats dans votre shortlist`;
-    candidats.forEach(candidat => {
+    const nCandidats = candidats.filter(candid => {
+        return candid.login.toLowerCase().includes(etat.cherch.toLowerCase()) &&
+        (etat.filter === "Tous" || candid.status === etat.filter)
+    })
+    nCandidats.forEach(candidat => {
         const article = afichCandidat(candidat);
         candidatsParent.append(article);
     });
