@@ -87,7 +87,7 @@ export async function modifieCandidat(id, candidat) {
 
 
 export async function deleteCandidat(id) {
-    const reponse = await fetch(`${API_URL}/candidats/${id}`, {method: "DELETE",});
+    const reponse = await fetch(`${API_URL}/candidats/${id}`, { method: "DELETE", });
     if (!reponse.ok) throw new Error(`Erreur HTTP ${reponse.status}`);
 }
 
