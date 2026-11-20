@@ -1,4 +1,5 @@
 import { getRepos, getUser } from "./api.js";
+import { getUtilisateur, setUtilisateur } from "./cache.js";
 import { validName } from "./utils.js";
 const API_URL = "https://6af5f059f6270fa08d68eb75.mockapi.io/api/v1";
 const params = new URLSearchParams(window.location.search);
@@ -8,10 +9,21 @@ let allRepos = [];
 async function afficherProfil() {
 
     if (!username) return;
+    let data = getUtilisateur(username);
 
-    const user = await getUser(username);
+    if (!data || !data.user) {
+        const [user, repos] = await Promise.all([
+            getUser(username),
+            getRepos(`https://api.github.com/users/${encodeURIComponent(username)}/repos?per_page=100&sort=updated`)
+        ]);
+        if (!user) return;
+        data = { user, repos };
+        setUtilisateur(username, data);
+    }
 
-    if (!user) return;
+    const user = data.user;
+    allRepos = data.repos;
+
     const name = document.querySelector("#username");
     name.value = user.login;
     console.log(user);
@@ -38,7 +50,7 @@ async function afficherProfil() {
     abonnement.textContent = user.following;
     const profilGitHub = document.querySelector("#profilGitHub");
     profilGitHub.href = user.html_url;
-    allRepos = await getRepos(`${user.repos_url}?per_page=100&sort=updated`);
+    // allRepos = await getRepos(`${user.repos_url}?per_page=100&sort=updated`);
     repositorie(allRepos);
 
 
@@ -47,7 +59,7 @@ async function afficherProfil() {
 
 }
 
-afficherProfil();
+
 
 
 
@@ -142,15 +154,28 @@ const myForm = document.querySelector("#myForm");
 
 myForm.addEventListener("submit", async (e) => {
     e.preventDefault();
+    const messageCharge = document.querySelector("#messageCharge")
     const name = document.querySelector("#username");
     let nom = validName(name.value);
     if (!nom) return;
-    const user = await getUser(nom);
-    if (!user) {
-        window.location.href = `../pages/introuvable.html?`;
-        return;
+    let utilisateur = getUtilisateur(nom);
+    if (utilisateur) {
+        messageCharge.textContent = "charge depuis le cache"
     }
-    window.location.href = `../pages/profil.html?username=${encodeURIComponent(user.login)}`;
+    else {
+        // utilisateur = await getUser(nom);
+        const results = await Promise.all([getUser(nom), getRepos(`https://api.github.com/users/${nom}/repos?per_page=100&sort=updated`)])
+        const user = results[0];
+        const repos = results[1];
+        if (!user) {
+            window.location.href = "/pages/introuvable.html";
+            return;
+        }
+        utilisateur = { user, repos }
+        setUtilisateur(nom, utilisateur);
+        messageCharge.textContent = "Chargé depuis API";
+    }
+    window.location.href = `/pages/profil.html?username=${encodeURIComponent(nom)}`;
 
 })
 
@@ -207,3 +232,4 @@ shortlistBtn.addEventListener("click", async () => {
 
 
 
+afficherProfil();
