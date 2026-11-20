@@ -1,165 +1,249 @@
-# DevScope v2 — GitHub Talent Discovery & Recruitment Management
+# DevScope — GitHub Developer Discovery & Recruitment Management
 
-**Application web de recherche, d'analyse et de gestion de profils de développeurs GitHub.**
+**Application web de recherche, d'analyse et de gestion de candidats développeurs GitHub.**
 
-DevScope est une application web destinée aux recruteurs techniques. Elle centralise la recherche de développeurs, l'exploration de leurs projets GitHub et le suivi des candidatures au sein d'une shortlist.
+**HTML5 · Tailwind CSS · JavaScript ES6+ · REST API · GitHub API · MockAPI**
 
-Développée en **HTML5, Tailwind CSS et JavaScript ES6+**, l'application exploite la **GitHub REST API** pour consulter les profils et dépôts publics, ainsi que **MockAPI** pour gérer les candidats.
+---
 
-La version 2 enrichit l'application avec la modification et la suppression des candidats, la recherche et le filtrage des dépôts, et un système de cache local permettant d'optimiser les appels à l'API GitHub.
+## Présentation du projet
 
-## Liens du projet
+**DevScope** est une application web de recrutement technique permettant de rechercher des développeurs sur GitHub, d'analyser leurs profils et leurs projets publics, puis de centraliser et suivre les candidats dans une shortlist.
 
-- **Application en ligne :** [DevScope — Live Demo](https://devscope-blue.vercel.app/)
-- **Dépôt GitHub :** [Anassaouji/DevScope](https://github.com/Anassaouji/DevScope)
-- **Gestion de projet :** [Tableau Jira](https://aoujianass.atlassian.net/jira/software/projects/DEV/boards/37/)
-- **Présentation :** [DevScope — Canva](https://canva.link/66agytw96fovbwv)
+L'application a été développée en **JavaScript Vanilla (ES6+)**, avec **HTML5** et **Tailwind CSS**, en s'appuyant sur deux API REST :
+
+- **GitHub REST API** pour récupérer les profils des développeurs et leurs dépôts publics.
+- **MockAPI** pour enregistrer, consulter, modifier et supprimer les candidats.
+
+Le projet a été réalisé en deux versions successives :
+
+- **DevScope v1 :** recherche de développeurs, consultation des profils GitHub, affichage des dépôts et gestion initiale de la shortlist.
+- **DevScope v2 :** évolution de la shortlist avec modification et suppression des candidats, filtrage avancé des dépôts et optimisation des performances grâce à un cache local.
+
+L'objectif est de proposer une interface centralisée, responsive et intuitive pour simplifier les différentes étapes du recrutement technique.
+
+## Démonstration et liens
+
+| Ressource | Lien |
+|---|---|
+| Application en ligne | [DevScope — Live Demo](https://devscope-blue.vercel.app/) |
+| Code source | [GitHub Repository](https://github.com/Anassaouji/DevScope) |
+| Gestion du projet | [Jira Board](https://aoujianass.atlassian.net/jira/software/projects/DEV/boards/37/) |
+| Présentation | [Canva Presentation](https://canva.link/66agytw96fovbwv) |
 
 ## 1. Contexte et problématique
 
-Dans le secteur du recrutement informatique, les recruteurs doivent régulièrement rechercher des développeurs, analyser leurs réalisations et suivre l'évolution de leurs candidatures.
+Dans le recrutement informatique, les recruteurs consultent régulièrement GitHub pour découvrir des développeurs, évaluer leurs compétences techniques et analyser leurs réalisations.
 
-Ces opérations deviennent rapidement chronophages lorsque les informations sont dispersées entre GitHub et différents outils de suivi.
+Cependant, plusieurs difficultés se présentent :
 
-**DevScope répond à trois besoins principaux :**
+- La recherche manuelle de développeurs prend du temps.
+- L'analyse des dépôts nécessite de naviguer entre plusieurs pages GitHub.
+- Les informations des candidats sont dispersées dans différents outils.
+- Le suivi de l'avancement du recrutement devient difficile.
+- Les consultations répétées peuvent augmenter inutilement le nombre de requêtes envoyées à GitHub.
 
-1. **Découvrir :** rechercher des développeurs et consulter leurs profils GitHub.
-2. **Analyser :** explorer leurs dépôts publics à l'aide de critères de recherche et de filtrage.
-3. **Organiser :** centraliser les candidats et suivre leur progression dans le processus de recrutement.
+**DevScope répond à ces problématiques en centralisant trois opérations essentielles :**
 
-### Pourquoi une version 2 ?
+1. **Rechercher** des développeurs sur GitHub.
+2. **Analyser** leurs profils et leurs dépôts publics.
+3. **Gérer** les candidats dans une shortlist avec un suivi de leur progression.
 
-La première version permettait de rechercher des développeurs, d'afficher leurs dépôts et de créer une shortlist.
+## 2. Évolution du projet — v1 et v2
 
-Cependant, plusieurs limites subsistaient :
+Le développement a été réalisé progressivement, en conservant les fonctionnalités existantes lors du passage à la seconde version.
 
-- Impossibilité de modifier ou de supprimer un candidat.
-- Navigation difficile dans les profils possédant de nombreux dépôts.
-- Requêtes GitHub répétées pour des profils déjà consultés.
-- Absence de suivi détaillé du statut et de l'évaluation des candidats.
+| Fonctionnalité | DevScope v1 | DevScope v2 |
+|---|---|---|
+| Recherche de profils GitHub | Oui | Conservée |
+| Validation du nom d'utilisateur | Oui | Conservée |
+| Affichage détaillé du profil | Oui | Conservé |
+| Affichage des dépôts publics | Oui | Conservé |
+| Ajout à la shortlist | Oui | Conservé |
+| Prévention des doublons | Oui | Conservée |
+| Recherche des candidats | Oui | Conservée |
+| Tri des candidats | Oui | Conservé |
+| Recherche des dépôts | Bonus v1 | Obligatoire v2 |
+| Filtre des dépôts par langage | Bonus v1 | Obligatoire v2 |
+| Modification d'un candidat | Non | Ajoutée |
+| Suppression d'un candidat | Non | Ajoutée |
+| Gestion du statut et de la note | Non | Ajoutée |
+| Cache avec expiration | Non | Ajouté |
+| Chargement parallèle des données | Non exigé | Ajouté avec Promise.all |
 
-**DevScope v2 apporte des solutions à ces limites sans supprimer les fonctionnalités de la version initiale.**
+Le tag Git **`v1.0`** permet d'identifier la première version et de conserver un point de référence avant les évolutions de la v2.
 
-## 2. Fonctionnalités
+## 3. Fonctionnalités de l'application
 
-### Recherche de développeurs
+### 3.1. Recherche de développeurs
 
-- Recherche d'un développeur par son nom d'utilisateur GitHub.
-- Validation de la saisie avant l'envoi de la requête.
-- Récupération des informations publiques depuis l'API GitHub.
-- Redirection vers une page de profil dédiée.
-- Gestion des utilisateurs introuvables et des erreurs de requête.
+La page d'accueil permet de rechercher un développeur à partir de son nom d'utilisateur GitHub.
 
-### Consultation des profils GitHub
+**Fonctionnalités :**
 
-Chaque profil présente les informations publiques disponibles :
+- Recherche depuis la page d'accueil ou depuis la page Profil.
+- Validation du nom d'utilisateur avant l'envoi de la requête.
+- Redirection vers la page du développeur.
+- Gestion des saisies invalides.
+- Affichage d'un message lorsqu'un profil n'existe pas.
+- Gestion des erreurs réseau et des limitations de l'API GitHub.
 
-- Avatar, nom, identifiant GitHub et biographie.
-- Localisation et date d'inscription.
+La validation respecte les principales règles des noms d'utilisateur GitHub : caractères alphanumériques et tirets, longueur maximale de 39 caractères, et absence de tiret au début ou à la fin.
+
+### 3.2. Consultation des profils GitHub
+
+Chaque profil présente les informations publiques récupérées depuis la GitHub REST API :
+
+- Avatar.
+- Nom et identifiant GitHub.
+- Biographie.
+- Localisation.
+- Date d'inscription.
 - Nombre de dépôts publics.
 - Nombre d'abonnés et d'abonnements.
 - Lien direct vers le compte GitHub.
-- Liste des dépôts publics avec leurs informations principales.
 
-Chaque dépôt peut afficher son nom, sa description, son langage principal, son nombre d'étoiles, ses forks et sa dernière date de mise à jour.
+Les propriétés absentes ou nulles sont remplacées par des valeurs par défaut afin de maintenir un affichage lisible.
 
-Les informations absentes sont gérées à l'aide de valeurs par défaut pour maintenir une interface cohérente.
+### 3.3. Exploration des dépôts publics
 
-### Recherche et filtrage des dépôts — v2
+Les dépôts sont présentés sous forme de cartes contenant :
 
-La page Profil intègre deux outils complémentaires :
+- Nom du dépôt.
+- Description du projet.
+- Langage de programmation principal.
+- Nombre d'étoiles.
+- Nombre de forks.
+- Date de dernière mise à jour.
+- Lien vers le dépôt GitHub.
 
-- **Recherche dynamique :** filtrage des dépôts selon leur nom.
-- **Filtre par langage :** sélection d'un langage de programmation dans une liste générée à partir des dépôts disponibles.
+**Nouveautés v2 — Recherche et filtrage**
 
-Les deux critères peuvent être combinés pour affiner les résultats.
+La page Profil intègre :
 
-Le traitement est effectué **côté navigateur avec `Array.filter()`**, sans effectuer de nouvelle requête API à chaque recherche.
+- Un champ de recherche permettant de filtrer les dépôts par nom.
+- Une liste déroulante permettant de sélectionner un langage de programmation.
+- Une combinaison des deux critères.
+- Un message lorsqu'aucun dépôt ne correspond.
 
-Lorsqu'aucun dépôt ne correspond aux critères sélectionnés, un message explicite est affiché.
+Les langages disponibles dans le filtre sont extraits automatiquement des dépôts chargés.
 
-### Gestion de la shortlist
+Le filtrage s'effectue directement dans le navigateur avec **`Array.filter()`**, sans requête supplémentaire à GitHub.
 
-La shortlist permet aux recruteurs de conserver et d'organiser les profils sélectionnés.
+### 3.4. Gestion de la shortlist
 
-**Fonctionnalités de la version initiale :**
+La shortlist centralise les profils sélectionnés par les recruteurs.
 
-- Ajout d'un candidat depuis sa page de profil.
-- Enregistrement des candidats dans MockAPI.
-- Vérification des doublons avant l'ajout.
-- Affichage des candidats enregistrés.
-- Recherche par nom ou identifiant GitHub.
-- Tri par nom ou par date d'ajout.
-- Affichage du nombre total de candidats.
+**Fonctionnalités v1 :**
 
-**Nouveautés de DevScope v2 :**
+- Ajouter un candidat à la shortlist depuis son profil.
+- Enregistrer les candidats dans MockAPI.
+- Empêcher l'ajout d'un candidat déjà enregistré.
+- Afficher les candidats sous forme de cartes.
+- Rechercher un candidat par nom ou login.
+- Trier les candidats par nom ou date d'ajout.
+- Afficher le nombre total de candidats.
 
-**Modification d'un candidat**
+**Nouveautés v2 — Modification**
 
-Chaque candidat dispose d'un bouton « Modifier » ouvrant une fenêtre permettant de renseigner :
+Chaque carte dispose d'un bouton **Modifier**, qui ouvre une fenêtre modale contenant :
 
-- Son statut : À contacter, Entretien, Retenu ou Refusé.
-- Une note de 1 à 5.
-- Un commentaire de suivi.
+- **Statut :** À contacter, Entretien, Retenu ou Refusé.
+- **Note :** évaluation de 1 à 5.
+- **Commentaire :** observation ou information sur le candidat.
 
-Les changements sont enregistrés dans MockAPI avec une requête HTTP `PUT`.
+Les nouvelles informations sont envoyées à MockAPI avec une requête HTTP `PUT`.
 
-Après validation, les informations de la carte sont actualisées **sans rechargement de la page**.
+Après une modification réussie, la carte est actualisée directement dans le DOM, sans rechargement de la page.
 
-**Suppression d'un candidat**
+**Nouveautés v2 — Suppression**
 
-- Bouton « Supprimer » sur chaque carte.
-- Demande de confirmation avant la suppression.
-- Suppression des données avec une requête HTTP `DELETE`.
-- Actualisation immédiate de la liste et du compteur.
+Un bouton **Supprimer** permet de retirer un candidat de la shortlist.
 
-**Gestion des états de l'interface**
+Le fonctionnement comprend :
 
-- Désactivation des boutons pendant les opérations asynchrones.
-- Prévention des soumissions multiples.
-- Messages d'erreur explicites en cas d'échec.
-- Gestion des erreurs réseau et des réponses HTTP non valides.
+1. Ouverture d'une fenêtre de confirmation.
+2. Validation ou annulation de l'opération.
+3. Envoi d'une requête HTTP `DELETE`.
+4. Suppression de la carte après confirmation de l'API.
+5. Actualisation de la liste et du compteur sans rechargement.
 
-### Optimisation des performances — v2
+### 3.5. Gestion des états de l'interface
 
-Pour limiter les requêtes répétitives vers l'API GitHub, DevScope dispose d'un système de cache utilisant `localStorage`.
+L'application prend en charge les différents états des opérations asynchrones :
 
-**Principe de fonctionnement :**
+- Affichage d'indicateurs de chargement.
+- Désactivation des boutons pendant les requêtes de modification et de suppression.
+- Prévention des actions répétées.
+- Messages adaptés aux erreurs HTTP.
+- Gestion des problèmes de connexion.
+- Affichage d'un état vide lorsque la shortlist ou les résultats sont absents.
 
-1. Lorsqu'un profil est demandé, l'application vérifie si ses données sont présentes dans le cache.
-2. Si les données existent et datent de moins de 10 minutes, elles sont récupérées directement depuis le navigateur.
-3. Si les données sont absentes ou expirées, une nouvelle récupération est effectuée depuis l'API GitHub.
-4. Les informations obtenues sont enregistrées dans le cache avec une durée de validité.
+Ces mécanismes améliorent la fiabilité de l'interface et permettent à l'utilisateur de comprendre le résultat de chaque opération.
 
-Les données sont sérialisées avec `JSON.stringify()` et désérialisées avec `JSON.parse()`.
+## 4. Optimisation des performances — DevScope v2
 
-Le chargement du profil et de ses dépôts est réalisé en parallèle avec **`Promise.all()`**, afin d'éviter deux requêtes successives inutilement dépendantes.
+### 4.1. Cache local avec expiration
 
-Cette approche permet de :
+La deuxième version intègre un système de cache utilisant **`localStorage`**.
 
-- Réduire le nombre d'appels à l'API GitHub.
-- Accélérer l'affichage des profils déjà consultés.
-- Limiter les risques d'atteindre le quota de requêtes de l'API.
-- Améliorer l'expérience utilisateur.
+Le cache permet de conserver temporairement les données d'un profil GitHub et ses dépôts publics.
 
-## 3. Technologies utilisées
+**Durée de validité : 10 minutes.**
 
-| Technologie | Rôle |
+**Fonctionnement :**
+
+1. L'utilisateur consulte un profil.
+2. L'application vérifie si les données existent dans le cache.
+3. Si le cache est valide, les informations sont récupérées immédiatement depuis `localStorage`.
+4. Si les données sont absentes ou expirées, l'application contacte GitHub.
+5. Les nouvelles données sont enregistrées dans le cache avec leur durée de validité.
+
+La sérialisation est réalisée avec `JSON.stringify()` et la lecture avec `JSON.parse()`.
+
+**Avantages :**
+
+- Réduction des appels répétitifs à GitHub.
+- Affichage plus rapide des profils déjà consultés.
+- Limitation de la consommation du quota de requêtes.
+- Amélioration de la fluidité de navigation.
+
+### 4.2. Chargement parallèle avec Promise.all
+
+Lorsqu'aucune donnée valide n'est disponible dans le cache, l'application peut récupérer simultanément :
+
+- Les informations du profil GitHub.
+- Les dépôts publics du développeur.
+
+L'utilisation de **`Promise.all()`** permet d'exécuter ces deux opérations indépendantes en parallèle plutôt que successivement.
+
+Cette approche réduit le temps d'attente lié aux requêtes réseau.
+
+## 5. Technologies utilisées
+
+| Technologie | Utilisation |
 |---|---|
 | HTML5 | Structure sémantique des pages |
-| Tailwind CSS | Interface responsive et composants visuels |
-| JavaScript ES6+ | Logique métier, DOM et modules |
-| GitHub REST API | Récupération des profils et dépôts |
-| MockAPI | Persistance et gestion des candidats |
-| Fetch API | Communication HTTP asynchrone |
-| LocalStorage | Mise en cache temporaire des données |
-| Git & GitHub | Versionnement et gestion du code source |
-| Jira | Planification Agile et suivi des tâches |
-| Vercel | Hébergement et déploiement de l'application |
+| Tailwind CSS | Mise en page, design et responsive |
+| JavaScript ES6+ | Logique applicative et manipulation du DOM |
+| GitHub REST API | Récupération des profils et dépôts publics |
+| MockAPI | Gestion et persistance des candidats |
+| Fetch API | Requêtes HTTP asynchrones |
+| LocalStorage | Mise en cache des profils |
+| Git | Versionnement du code source |
+| GitHub | Hébergement et suivi du dépôt |
+| Jira | Organisation des epics, stories et tâches |
+| Vercel | Déploiement de l'application |
 
-## 4. Architecture du projet
+**Concepts JavaScript exploités :**
 
-L'application repose sur une architecture modulaire utilisant les modules JavaScript ES6 (`import` / `export`).
+`async/await`, `Promise.all`, `fetch`, `try/catch`, `import/export`, `filter`, `sort`, `find`, `some`, `map`, `JSON.stringify`, `JSON.parse`, `Date.now`, `createElement`, `textContent`, `addEventListener`.
+
+## 6. Architecture et organisation du code
+
+Le projet repose sur une architecture frontend modulaire avec des modules JavaScript ES6.
+
+**Structure logique du projet :**
 
 ```text
 DevScope/
@@ -178,60 +262,66 @@ DevScope/
 │   ├── profil.js
 │   └── shortlist.js
 │
-├── README.md
-└── .gitignore
+├── .gitignore
+└── README.md
 ```
 
-### Responsabilité des modules
+**Responsabilités des modules :**
 
-| Module | Responsabilité |
+| Fichier | Responsabilité |
 |---|---|
-| `config.js` | Configuration des API, statuts et paramètres |
-| `api.js` | Centralisation des appels HTTP |
-| `cache.js` | Lecture, écriture et expiration du cache |
-| `utils.js` | Fonctions utilitaires et validation |
-| `states.js` | Gestion des états de l'application |
-| `search.js` | Logique de recherche des développeurs |
-| `profil.js` | Affichage du profil, des dépôts et filtres |
-| `shortlist.js` | Affichage et gestion des candidats |
+| `config.js` | URLs des API et constantes de configuration |
+| `api.js` | Appels API et gestion des réponses HTTP |
+| `cache.js` | Stockage, récupération et expiration du cache |
+| `utils.js` | Validation et fonctions utilitaires |
+| `states.js` | Gestion des états de l'interface |
+| `search.js` | Recherche des utilisateurs GitHub |
+| `profil.js` | Profil, dépôts, recherche et filtrage |
+| `shortlist.js` | Affichage, recherche, tri et CRUD des candidats |
 
-Cette séparation permet de limiter les responsabilités de chaque fichier, d'améliorer la maintenance et de faciliter les évolutions futures.
+L'organisation par modules permet de séparer la logique de communication avec les API, les traitements de données et la manipulation du DOM.
 
-## 5. Fonctionnement des API
+Elle facilite également la réutilisation des fonctions et la maintenance du projet.
 
-### GitHub REST API
+## 7. Intégration des API REST
 
-L'application utilise les endpoints publics de GitHub :
+### 7.1. GitHub REST API
+
+L'application exploite les endpoints publics suivants :
 
 ```http
 GET https://api.github.com/users/{username}
 GET https://api.github.com/users/{username}/repos
 ```
 
-Ces endpoints permettent de récupérer les informations d'un développeur et ses dépôts publics.
+**GET `/users/{username}`**
 
-Les deux ressources peuvent être chargées en parallèle avec `Promise.all()`.
+Récupère les informations publiques du développeur : nom, avatar, biographie, localisation, statistiques et liens.
 
-Les réponses HTTP sont contrôlées pour gérer les situations telles que :
+**GET `/users/{username}/repos`**
 
-- `200 OK` : requête réussie.
-- `403 Forbidden` : accès refusé ou limitation de l'API.
-- `404 Not Found` : utilisateur introuvable.
-- `429 Too Many Requests` : trop de requêtes.
-- Erreur réseau : absence de connexion ou problème de communication.
+Récupère une liste des dépôts publics du développeur, avec leurs métadonnées.
 
-### MockAPI — Gestion des candidats
+Le filtrage des dépôts est réalisé sur les données récupérées, directement côté navigateur.
 
-MockAPI fournit une API REST pour conserver les candidats de la shortlist.
+### 7.2. MockAPI
 
-| Méthode | Endpoint | Fonction |
-|---|---|---|
-| GET | `/candidats` | Récupérer les candidats |
-| POST | `/candidats` | Ajouter un candidat |
-| PUT | `/candidats/:id` | Modifier un candidat |
-| DELETE | `/candidats/:id` | Supprimer un candidat |
+MockAPI assure la persistance des candidats.
 
-**Exemple de données d'un candidat :**
+| Méthode | Endpoint | Description | Version |
+|---|---|---|---|
+| GET | `/candidats` | Récupérer les candidats | v1 |
+| POST | `/candidats` | Ajouter un candidat | v1 |
+| PUT | `/candidats/:id` | Modifier un candidat | v2 |
+| DELETE | `/candidats/:id` | Supprimer un candidat | v2 |
+
+Les requêtes utilisent `fetch()` avec `async/await`, `try/catch` et une vérification de `response.ok`.
+
+Les requêtes `POST` et `PUT` transmettent des données au format JSON avec l'en-tête `Content-Type: application/json`.
+
+### 7.3. Structure d'un candidat
+
+Exemple de représentation d'un candidat dans MockAPI :
 
 ```json
 {
@@ -243,215 +333,243 @@ MockAPI fournit une API REST pour conserver les candidats de la shortlist.
   "language": "JavaScript",
   "rating": 4,
   "status": "Entretien",
-  "note": "Bon profil frontend",
+  "note": "Bon niveau JavaScript et projets intéressants.",
   "createdAt": "2026-11-16T10:00:00.000Z"
 }
 ```
 
-### Communication asynchrone
+Les propriétés `status`, `rating` et `note` permettent de suivre la progression du candidat dans le processus de recrutement.
 
-Les opérations réseau reposent sur :
+## 8. Gestion des erreurs
 
-- `fetch()` pour envoyer les requêtes HTTP.
-- `async / await` pour gérer les traitements asynchrones.
-- `try / catch` pour intercepter les erreurs.
-- `response.ok` pour vérifier les réponses HTTP.
-- `JSON.stringify()` pour transmettre les données JSON.
+DevScope intègre une gestion des erreurs pour les interactions avec les services externes.
 
-Pour les requêtes `PUT`, l'en-tête `Content-Type: application/json` est utilisé.
-
-## 6. Gestion du cache
-
-Le module `cache.js` centralise la gestion des données mises en cache.
-
-**Durée de validité : 10 minutes.**
-
-Les entrées sont associées à une information temporelle permettant de déterminer si elles sont encore valides.
-
-| Situation | Comportement |
+| Situation | Comportement attendu |
 |---|---|
-| Première consultation | Chargement depuis GitHub |
-| Nouvelle consultation avant 10 min | Lecture depuis `localStorage` |
-| Cache expiré | Nouvelle récupération depuis GitHub |
-| Données absentes | Requête API |
-| Données invalides | Nouvelle récupération après gestion du cache invalide |
+| Nom d'utilisateur invalide | Message de validation |
+| HTTP 404 | Message indiquant que la ressource est introuvable |
+| HTTP 403 | Message d'accès refusé ou de limitation |
+| HTTP 429 | Message de limitation du nombre de requêtes |
+| Erreur réseau | Message de connexion et possibilité de réessayer |
+| Shortlist vide | Affichage d'un état vide |
+| Aucun dépôt correspondant | Message indiquant l'absence de résultats |
+| Échec d'une modification | Conservation de l'état précédent et message d'erreur |
+| Échec d'une suppression | Conservation du candidat et message d'erreur |
 
-Le cache concerne les données publiques des profils GitHub et leurs dépôts, et ne remplace pas la persistance des candidats effectuée par MockAPI.
+Les appels asynchrones sont encadrés avec `try/catch` et les réponses HTTP sont vérifiées avant l'exploitation des données.
 
-## 7. Interface et expérience utilisateur
+## 9. Interface utilisateur et responsive design
 
-DevScope propose une interface conçue pour faciliter les opérations courantes des recruteurs.
+L'application est composée de trois pages HTML :
 
-- Design responsive avec Tailwind CSS.
-- Navigation commune entre les différentes pages.
-- Cartes de présentation des développeurs et candidats.
-- Fenêtres modales pour les opérations de modification et de suppression.
-- Indicateurs d'état pendant les opérations asynchrones.
-- Messages de validation, de chargement et d'erreur.
-- Champs de formulaire associés à des labels.
-- Interface adaptée à différents formats d'écran.
+| Page | Fichier | Fonction |
+|---|---|---|
+| Recherche | `index.html` | Rechercher un développeur |
+| Profil | `profil.html?username=...` | Consulter et analyser un profil |
+| Shortlist | `shortlist.html` | Gérer les candidats |
 
-Les données externes sont insérées dans le DOM avec `createElement()` et `textContent`, afin de limiter les risques liés à l'injection de contenu HTML.
+L'interface est développée avec **Tailwind CSS** selon une approche responsive.
 
-## 8. Organisation et suivi du projet
+Elle comprend :
 
-DevScope v2 a été développé dans le cadre d'un projet individuel organisé avec Jira.
+- Une navigation commune aux trois pages.
+- Des cartes de présentation des profils et dépôts.
+- Des formulaires de recherche et de filtrage.
+- Des modales de modification et de suppression.
+- Des indicateurs de chargement.
+- Des messages de validation et d'erreur.
 
-**Méthodologie :** gestion des tâches à travers une epic, des user stories et des sous-tâches.
+Les nouveaux champs disposent de labels et les fenêtres modales doivent rester utilisables au clavier.
 
-Le développement de la v2 s'effectue dans le même dépôt GitHub que la première version.
+Pour afficher les données provenant des API, l'application privilégie `createElement()` et `textContent`, plutôt que l'insertion directe de données externes avec `innerHTML`.
 
-Le tag Git `v1.0` permet d'identifier la version initiale, tandis que les messages de commit font référence aux tickets Jira.
-
-**Principales étapes du développement :**
-
-| Étape | Réalisation |
-|---|---|
-| Version 1 | Recherche GitHub, profil et shortlist |
-| Évolution des dépôts | Recherche et filtrage combinés |
-| Gestion des candidats | Modification avec PUT |
-| Gestion des candidats | Suppression avec DELETE |
-| Performance | Cache local avec expiration |
-| Optimisation | Chargement parallèle avec Promise.all |
-| Finalisation | Tests, documentation et déploiement |
-
-La planification est consultable depuis le [tableau Jira](https://aoujianass.atlassian.net/jira/software/projects/DEV/boards/37/).
-
-## 9. Installation et exécution
+## 10. Installation et exécution locale
 
 ### Prérequis
 
-- Un navigateur web moderne.
 - Git.
-- Visual Studio Code ou un autre éditeur.
-- Un serveur de développement local, par exemple Live Server.
-- Une connexion Internet pour accéder aux API externes.
+- Visual Studio Code ou un éditeur équivalent.
+- Navigateur web moderne.
+- Extension Live Server ou serveur HTTP local.
+- Connexion Internet pour utiliser les API.
 
-### Étape 1 — Cloner le dépôt
+### Cloner le projet
 
 ```bash
 git clone https://github.com/Anassaouji/DevScope.git
 ```
 
-### Étape 2 — Accéder au projet
+### Accéder au dossier
 
 ```bash
 cd DevScope
 ```
 
-### Étape 3 — Configurer l'application
+### Lancer le projet
 
-Vérifier les adresses des API et les paramètres disponibles dans le module de configuration.
+1. Ouvrir le dossier dans Visual Studio Code.
+2. Vérifier la configuration des endpoints de l'API MockAPI.
+3. Ouvrir `index.html` avec Live Server.
+4. Rechercher un développeur GitHub et explorer ses projets.
 
-### Étape 4 — Lancer l'application
+Aucune installation de dépendances npm ni compilation n'est nécessaire pour exécuter la logique JavaScript native.
 
-Ouvrir `index.html` à l'aide de Live Server dans Visual Studio Code.
+## 11. Sécurité et bonnes pratiques
 
-### Étape 5 — Utiliser DevScope
+Le projet applique plusieurs bonnes pratiques de développement frontend :
 
-1. Rechercher un développeur GitHub.
-2. Consulter son profil et ses dépôts.
-3. Utiliser les filtres pour explorer ses projets.
-4. Ajouter un profil intéressant à la shortlist.
-5. Modifier son statut, sa note ou son commentaire.
-6. Supprimer un candidat si nécessaire.
-7. Reconsulter un profil pour bénéficier du cache local.
+- Validation du nom d'utilisateur avant les requêtes.
+- Vérification des statuts HTTP avec `response.ok`.
+- Gestion des erreurs avec `try/catch`.
+- Utilisation de `textContent` pour les données externes.
+- Séparation des responsabilités avec les modules ES6.
+- Prévention des doublons dans la shortlist.
+- Contrôle des actions asynchrones.
+- Vérification de la validité des données en cache.
 
-## 10. Sécurité et bonnes pratiques
+**Sécurité des tokens GitHub :**
 
-Le projet applique plusieurs principes de développement frontend :
+Aucun token personnel GitHub ne doit être publié dans le code source ou dans l'historique Git.
 
-- Validation des données saisies par l'utilisateur.
-- Gestion des erreurs HTTP et des erreurs réseau.
-- Contrôle des réponses avant leur exploitation.
-- Désactivation des boutons pendant les requêtes.
-- Séparation du code en modules réutilisables.
-- Utilisation de `textContent` pour afficher les données externes.
-- Vérification des données enregistrées dans le cache.
+Les variables d'environnement injectées dans une application frontend ne rendent pas un secret confidentiel si sa valeur est envoyée au navigateur.
 
-**Gestion des tokens GitHub :**
+Une authentification nécessitant un token secret doit être gérée par un backend sécurisé.
 
-Les tokens personnels et autres secrets ne doivent jamais être publiés dans le dépôt GitHub.
+## 12. Tests et validation
 
-Une application frontend statique ne peut pas garantir la confidentialité d'un token intégré à son JavaScript, même si celui-ci est fourni au moment du déploiement.
+Les principaux scénarios de test du projet couvrent :
 
-Pour protéger un secret en production, les requêtes nécessitant une authentification doivent passer par un service backend sécurisé.
+### Recherche et profil
 
-## 11. Tests et validation
+- Recherche d'un utilisateur existant.
+- Recherche d'un utilisateur inexistant.
+- Validation des noms d'utilisateur incorrects.
+- Affichage des informations manquantes.
+- Gestion des erreurs réseau.
 
-Les principaux scénarios à vérifier sont :
+### Dépôts
 
-**Recherche et profils**
-- Recherche avec un nom d'utilisateur valide.
-- Recherche avec un nom invalide ou inexistant.
-- Gestion des réponses HTTP en erreur.
-- Affichage des données facultatives manquantes.
+- Chargement des dépôts publics.
+- Recherche d'un dépôt par nom.
+- Filtrage par langage.
+- Combinaison recherche et filtre.
+- Affichage d'un résultat vide.
 
-**Dépôts**
-- Recherche par nom.
-- Filtre par langage.
-- Combinaison recherche + filtre.
-- Affichage d'un message en cas de résultat vide.
+### Shortlist
 
-**Shortlist**
-- Ajout et détection des doublons.
+- Ajout d'un candidat.
+- Prévention des doublons.
+- Recherche et tri des candidats.
 - Modification du statut, de la note et du commentaire.
-- Mise à jour immédiate de la carte.
 - Confirmation avant suppression.
-- Actualisation de la liste et du compteur.
-- Gestion des erreurs pendant les opérations.
+- Mise à jour de l'interface sans rechargement.
+- Désactivation des boutons pendant les requêtes.
+- Gestion des échecs des opérations API.
 
-**Cache**
-- Consultation initiale d'un profil.
-- Reconsultation avant 10 minutes.
-- Expiration du cache après 10 minutes.
-- Contrôle des requêtes dans l'onglet Network des DevTools.
+### Cache et performance
 
-**Qualité**
-- Vérification du responsive.
-- Vérification de l'accessibilité des formulaires et modales.
-- Validation HTML avec [W3C Validator](https://validator.w3.org/).
+- Chargement initial depuis GitHub.
+- Lecture depuis `localStorage` avant expiration.
+- Nouvelle requête après expiration du cache.
+- Vérification des requêtes dans l'onglet Network.
+- Chargement parallèle du profil et des dépôts.
 
-## 12. Compétences mises en pratique
+### Accessibilité et qualité
 
-Ce projet permet de mettre en œuvre plusieurs compétences fondamentales du développement frontend :
+- Affichage sur mobile, tablette et ordinateur.
+- Navigation au clavier.
+- Labels associés aux champs.
+- Textes alternatifs pour les images.
+- Validation du HTML avec [W3C Validator](https://validator.w3.org/).
 
-- Consommation et intégration d'API REST.
+## 13. Gestion de projet et versionnement
+
+Le projet a été réalisé individuellement dans le cadre de deux briefs de développement web.
+
+**DevScope v1 — 9 au 13 novembre 2026**
+
+Objectif : développer les fonctionnalités principales de recherche, consultation et gestion initiale des candidats.
+
+**DevScope v2 — 16 au 20 novembre 2026**
+
+Objectif : améliorer le suivi des candidats, l'exploration des dépôts et les performances de l'application.
+
+L'organisation repose sur :
+
+- Un tableau Jira avec epics, user stories et sous-tâches.
+- Des commits Git réguliers associés aux tickets Jira.
+- Des branches de développement pour isoler les fonctionnalités.
+- Un tag Git `v1.0` pour identifier la première version.
+- Une documentation mise à jour avec les fonctionnalités de la v2.
+
+**Exemples de messages de commit :**
+
+```bash
+DEV-10 : ajouter la recherche des dépôts
+DEV-11 : implémenter le filtre par langage
+DEV-12 : ajouter la modification des candidats
+DEV-13 : implémenter la suppression des candidats
+DEV-14 : ajouter le cache avec expiration
+```
+
+Les identifiants ci-dessus sont des exemples de format et ne représentent pas nécessairement les tickets réels du projet.
+
+## 14. Compétences développées
+
+La réalisation des deux versions a permis de mettre en pratique :
+
+**Développement frontend**
+- HTML5 sémantique et Tailwind CSS.
+- Responsive design et accessibilité.
 - Manipulation dynamique du DOM.
-- JavaScript ES6+ et programmation asynchrone.
-- Requêtes HTTP CRUD avec `fetch`.
+- Gestion des événements et formulaires.
+
+**JavaScript**
+- Modules ES6 avec `import` / `export`.
+- Méthodes de tableaux : `filter`, `sort`, `find`, `some`.
+- Gestion des états et rendu dynamique.
+- Programmation asynchrone avec `async/await`.
 - Gestion des promesses avec `Promise.all`.
-- Filtrage dynamique avec les méthodes de tableaux.
-- Gestion du stockage local et de l'expiration des données.
-- Traitement des erreurs et états de chargement.
-- Structuration du code en modules ES6.
-- Versionnement Git et organisation du travail avec Jira.
-- Déploiement d'une application web statique.
 
-## 13. Perspectives d'amélioration
+**API et persistance**
+- Consommation de services REST.
+- Méthodes HTTP GET, POST, PUT et DELETE.
+- Gestion des réponses et erreurs HTTP.
+- Sérialisation et désérialisation JSON.
+- Persistance des candidats avec MockAPI.
+- Optimisation des requêtes avec un cache local.
 
-Plusieurs évolutions peuvent être envisagées :
+**Méthodes et outils**
+- Organisation modulaire du code.
+- Git, GitHub et gestion des versions.
+- Planification des tâches avec Jira.
+- Tests fonctionnels et débogage.
+- Déploiement d'une application web.
 
-- Filtrage de la shortlist par statut et affichage de compteurs.
-- Possibilité d'annuler une suppression pendant quelques secondes.
-- Comparaison de deux développeurs sur une même page.
-- Statistiques des profils GitHub et répartition des langages.
-- Tri et pagination des dépôts.
-- Comparaison entre `fetch` et Axios.
+## 15. Perspectives d'évolution
+
+Les évolutions futures possibles comprennent :
+
+- Filtrage de la shortlist par statut avec des compteurs.
+- Annulation d'une suppression pendant cinq secondes.
+- Comparaison de deux développeurs côte à côte.
+- Statistiques des profils et répartition des langages.
+- Tri des dépôts par étoiles, nom et date.
+- Pagination des dépôts.
+- Intégration d'Axios pour comparer les approches HTTP.
 - Ajout de tests automatisés.
-- Intégration d'un backend pour sécuriser les fonctionnalités nécessitant une authentification.
+- Développement d'un backend sécurisé.
 
-## 14. Auteur
+## 16. Auteur
 
 **Anass Aouji**
 
 Développeur Web — JavaScript, React & Laravel
 
-- **GitHub :** [Anassaouji](https://github.com/Anassaouji)
-- **Projet :** [DevScope](https://github.com/Anassaouji/DevScope)
+**GitHub :** [github.com/Anassaouji](https://github.com/Anassaouji)
 
-Projet individuel réalisé dans un cadre pédagogique, consacré à l'intégration d'API REST, au développement frontend JavaScript et à l'optimisation des performances d'une application web.
+Projet individuel réalisé dans le cadre d'une formation en développement web, avec pour objectifs la maîtrise des API REST, de JavaScript ES6+, de la manipulation du DOM et de la structuration d'applications frontend.
 
 ---
 
-**DevScope v2 — Search. Analyze. Recruit.**
+**DevScope — Discover developers. Explore projects. Manage talent.**
