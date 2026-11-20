@@ -28,7 +28,8 @@ L'objectif est de proposer une interface centralisée, responsive et intuitive p
 |---|---|
 | Application en ligne | [DevScope — Live Demo](https://devscope-blue.vercel.app/) |
 | Code source | [GitHub Repository](https://github.com/Anassaouji/DevScope) |
-| Gestion du projet | [Jira Board](https://aoujianass.atlassian.net/jira/software/projects/DEV/boards/37/) |
+| Gestion du projet v1 | [Jira Board](https://aoujianass.atlassian.net/jira/software/projects/DEV/boards/37/) |
+| Gestion du projet v2 | [Jira Board](https://aoujianass.atlassian.net/jira/software/projects/DEVS2/boards/38) |
 | Présentation | [Canva Presentation](https://canva.link/66agytw96fovbwv) |
 
 ## 1. Contexte et problématique
