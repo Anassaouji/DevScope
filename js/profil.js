@@ -86,22 +86,7 @@ function repositorie(repos) {
 
 }
 
-// function searchRepo(repos) {
-//     const searchForm = document.querySelector("#formSearch");
-//     searchForm.addEventListener("submit", (e) => {
-//         e.preventDefault();
-//         const parent = document.querySelector(".parentRepo");
-//         const searchValue = document.querySelector("#searchRepo");
-//         console.log(searchValue.value.toLocaleLowerCase());
-//         const repo = repos.filter(repo => {
-//             return repo.name.toLocaleLowerCase().includes(searchValue.value.toLocaleLowerCase());
-//         })
 
-//         const article = aficheRepo(repo[0]);
-//         parent.replaceChildren(article);
-
-//     })
-// }
 
 function aficheRepo(repo) {
     const article = document.createElement("article");
@@ -144,6 +129,8 @@ btnParent.addEventListener("click", (e) => {
     const btn = e.target.closest("[data-filter]");
 
     if (btn) {
+        document.querySelectorAll("[data-filter]").forEach(btn => btn.classList.remove("bg-[#00b8db]"));
+        btn.classList.add("bg-[#00b8db]")
         etat.categorie = btn.dataset.filter;
         repositorie(allRepos);
     }
